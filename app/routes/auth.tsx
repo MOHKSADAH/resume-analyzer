@@ -25,27 +25,27 @@ const Auth = () => {
   }, [auth.isAuthenticated, isLoading, next, navigate]);
 
   return (
-    <main className="min-h-screen flex items-center justify-center">
-      <div className="border-2 border-blueprint-line rounded-xl shadow-lg blueprint-corner-brackets">
-        <section className="flex flex-col gap-8 bg-white rounded-xl p-10">
-          <div className="flex flex-col items-center gap-2 text-center">
-            <h1>Welcome</h1>
-            <h2>Login to Continue Your Job Journey</h2>
+    <main className="min-h-screen flex items-center justify-center p-4">
+      <div className="border border-blueprint-line rounded-2xl shadow-lg max-w-2xl w-full">
+        <section className="flex flex-col gap-8 bg-white rounded-2xl p-12 max-sm:p-8">
+          <div className="flex flex-col items-center gap-3 text-center">
+            <h1 className="text-5xl max-sm:text-4xl">Welcome</h1>
+            <p className="text-xl text-blueprint-text-muted font-medium">Login to Continue Your Job Journey</p>
           </div>
-          <div>
+          <div className="flex justify-center mt-4">
             {isLoading ? (
-              <button className="auth-button animate-pulse">
-                <p>Signing you in...</p>
+              <button className="auth-button animate-pulse" disabled>
+                Signing you in...
               </button>
             ) : (
               <>
                 {auth.isAuthenticated ? (
                   <button className="auth-button" onClick={auth.signOut}>
-                    <p>Logout</p>
+                    Logout
                   </button>
                 ) : (
                   <button className="auth-button" onClick={auth.signIn}>
-                    <p>Login</p>
+                    Login with Puter
                   </button>
                 )}
               </>

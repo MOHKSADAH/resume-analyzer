@@ -21,6 +21,14 @@ const Navbar = () => {
                 <Link to="/upload" className="btn-primary btn-md">
                     Upload Resume
                 </Link>
+                {auth.isAuthenticated && (
+                    <button
+                        onClick={auth.signOut}
+                        className="btn-secondary btn-md"
+                    >
+                        Logout
+                    </button>
+                )}
             </div>
         </nav>
     );

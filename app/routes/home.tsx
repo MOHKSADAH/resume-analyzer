@@ -28,6 +28,12 @@ export default function Home() {
 
   useEffect(() => {
     const loadResumes = async () => {
+      // Only load resumes if authenticated
+      if (!auth.isAuthenticated || isLoading) {
+        setLoadingResumes(false);
+        return;
+      }
+
       setLoadingResumes(true);
 
       const resumes = (await kv.list("resume:*", true)) as KVItem[];
@@ -41,7 +47,7 @@ export default function Home() {
       setLoadingResumes(false);
     };
     loadResumes();
-  }, []);
+  }, [auth.isAuthenticated, isLoading]);
 
   return (
     <main className="min-h-screen flex flex-col">
