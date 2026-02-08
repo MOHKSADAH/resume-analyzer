@@ -18,11 +18,12 @@ const ScoreCircle = ({ score = 75 }: { score: number }) => {
                     strokeWidth={stroke}
                     fill="transparent"
                 />
-                {/* Partial circle with gradient */}
+                {/* Partial circle with blueprint gradient */}
                 <defs>
                     <linearGradient id="grad" x1="1" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stopColor="#FF97AD" />
-                        <stop offset="100%" stopColor="#5171FF" />
+                        <stop offset="0%" stopColor="#60a5fa" />
+                        <stop offset="50%" stopColor="#3b82f6" />
+                        <stop offset="100%" stopColor="#1e3a8a" />
                     </linearGradient>
                 </defs>
                 <circle
@@ -40,7 +41,7 @@ const ScoreCircle = ({ score = 75 }: { score: number }) => {
 
             {/* Score and issues */}
             <div className="absolute inset-0 flex flex-col items-center justify-center">
-                <span className="font-semibold text-sm">{`${score}/100`}</span>
+                <span className="font-semibold text-sm font-mono text-blueprint-text">{`${score}/100`}</span>
             </div>
         </div>
     );

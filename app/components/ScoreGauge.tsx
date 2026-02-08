@@ -18,8 +18,9 @@ const ScoreGauge = ({ score = 75 }: { score: number }) => {
                 <svg viewBox="0 0 100 50" className="w-full h-full">
                     <defs>
                         <linearGradient id="gaugeGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                            <stop offset="0%" stopColor="#a78bfa" />
-                            <stop offset="100%" stopColor="#fca5a5" />
+                            <stop offset="0%" stopColor="#1e3a8a" />
+                            <stop offset="50%" stopColor="#3b82f6" />
+                            <stop offset="100%" stopColor="#60a5fa" />
                         </linearGradient>
                     </defs>
 
@@ -46,7 +47,9 @@ const ScoreGauge = ({ score = 75 }: { score: number }) => {
                 </svg>
 
                 <div className="absolute inset-0 flex flex-col items-center justify-center pt-2">
-                    <div className="text-xl font-semibold pt-4">{score}/100</div>
+                    <div className="text-xl font-semibold pt-4 font-mono text-blueprint-text">
+                        {score}/100
+                    </div>
                 </div>
             </div>
         </div>

@@ -7,18 +7,26 @@ interface FileUploaderProps {
 }
 
 const FileUploader = ({ onFileSelect }: FileUploaderProps) => {
+    const [selectedFile, setSelectedFile] = useState<File | null>(null);
+
     const onDrop = useCallback(
         (acceptedFiles: File[]) => {
             const file = acceptedFiles[0] || null;
-
+            setSelectedFile(file);
             onFileSelect?.(file);
         },
         [onFileSelect]
     );
 
+    const handleRemove = (e: React.MouseEvent) => {
+        e.stopPropagation();
+        setSelectedFile(null);
+        onFileSelect?.(null);
+    };
+
     const maxFileSize = 20 * 1024 * 1024; // 20MB
 
-    const { getRootProps, getInputProps, isDragActive, acceptedFiles } = useDropzone({
+    const { getRootProps, getInputProps, isDragActive } = useDropzone({
         onDrop,
         multiple: false,
         accept: {
@@ -27,57 +35,64 @@ const FileUploader = ({ onFileSelect }: FileUploaderProps) => {
         maxSize: maxFileSize, // 20MB
     });
 
-    const file = acceptedFiles[0] || null;
+    const file = selectedFile;
 
     return (
-        <div className="w-full gradient-border">
+        <div className="w-full">
             <div {...getRootProps()}>
                 <input {...getInputProps()} />
-                <div className="space-y-4 cursor-pointer">
+                <div className="space-y-4">
                     {file ? (
                         <div
-                            className="uploader-selected-file"
+                            className="uploader-selected-file flex-col gap-3"
                             onClick={(e) => e.stopPropagation()}
                         >
-                            <div className="flex items-center justify-between w-full">
-                                <div className="flex items-center gap-3">
-                                    <img src="/images/pdf.png" alt="PDF Icon" className="size-10" />
-                                    <div className="flex flex-col">
-                                        <p className="text-sm font-medium text-gray-800 truncate max-w-xs">
-                                            {file.name}
-                                        </p>
-                                        <p className="text-xs text-gray-500">
-                                            {formatSize(file.size)}
-                                        </p>
-                                    </div>
-                                </div>
-                                <div className="flex items-center gap-2">
-                                    <img src="/icons/check.svg" alt="Success" className="w-5 h-5" />
-                                    <span className="text-sm font-medium text-green-600">
-                                        Uploaded
+                            <div className="flex items-center gap-3 w-full">
+                                <img src="/images/pdf.png" alt="PDF Icon" className="size-10" />
+                                <div className="flex flex-col flex-1 min-w-0">
+                                    <span className="text-[10px] font-semibold tracking-wider text-blueprint-accent uppercase mb-1">
+                                        FILE
                                     </span>
+                                    <p className="text-sm font-semibold text-blueprint-text truncate">
+                                        {file.name}
+                                    </p>
+                                    <p className="text-xs text-blueprint-text-muted font-medium">
+                                        {formatSize(file.size)}
+                                    </p>
                                 </div>
                             </div>
-                            <button
-                                className="p-3 cursor-pointer"
-                                onClick={(e) => {
-                                    onFileSelect?.(null);
-                                }}
-                            >
-                                <img src="/icons/cross.svg" alt="Remove" className="w-4 h-4" />
-                            </button>
+                            <div className="flex items-center justify-between w-full gap-3">
+                                <div className="flex items-center gap-2">
+                                    <img src="/icons/check.svg" alt="Success" className="w-5 h-5" />
+                                    <span className="text-sm font-semibold text-green-600">
+                                        Uploaded!
+                                    </span>
+                                </div>
+                                <button
+                                    className="btn-secondary btn-sm"
+                                    onClick={handleRemove}
+                                >
+                                    Remove
+                                </button>
+                            </div>
                         </div>
                     ) : (
-                        <div>
+                        <div
+                            className={`uplader-drag-area ${
+                                isDragActive ? 'border-blueprint-accent bg-blueprint-paper' : ''
+                            }`}
+                        >
                             <div className="mx-auto w-16 h-16 flex items-center justify-center mb-2">
                                 <img src="/icons/info.svg" alt="Info Icon" className="size-20" />
                             </div>
-                            <p className="text-lg text-gray-500">
-                                <span className="font-semibold"> Click to Upload</span> or drag &
-                                drop
+                            <p className="text-lg text-blueprint-text-muted">
+                                <span className="font-semibold text-blueprint-accent">
+                                    {' '}
+                                    Click to Upload
+                                </span>{' '}
+                                or drag & drop
                             </p>
-                            <p className="text-lg text-gray-500">
-                                {' '}
+                            <p className="text-sm text-blueprint-text-muted font-medium mt-2">
                                 PDF (max {formatSize(maxFileSize)})
                             </p>
                         </div>

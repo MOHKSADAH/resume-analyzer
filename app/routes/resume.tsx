@@ -54,10 +54,14 @@ const Resume = () => {
     }, [id]);
     return (
         <main className="!pt-0">
-            <nav className="resume=nav">
+            <nav className="resume-nav">
+                <div className="breadcrumb">
+                    <Link to="/" className="breadcrumb-link">Home</Link>
+                    <span className="breadcrumb-separator">/</span>
+                    <span className="breadcrumb-current">Resume Analysis</span>
+                </div>
                 <Link to="/" className="back-button">
-                    <img src="/icons/back.svg" alt="logo " className="w-2.5 h-2.5" />
-                    <span className="text-gray-800 text-sm font-semibold">Back to Homepage</span>
+                    Back to Homepage
                 </Link>
             </nav>
             <div className="flex flex-row w-full max-lg:flex-col-reverse">
